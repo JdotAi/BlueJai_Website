@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BlueJai</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Sacramento&family=Special+Elite&display=swap');
@@ -75,6 +75,8 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            overflow: hidden;
+            min-height: 480px;
         }
         
         .welcome-text {
@@ -94,6 +96,7 @@
             font-family: 'Special Elite', monospace;
             max-width: 85%;
             text-align: center;
+            width: 100%;
         }
         
         .logo {
@@ -901,7 +904,7 @@
             }
             
             .logo {
-                font-size: 3.5rem;
+                font-size: 6rem;
             }
             
             .section-title, .app-title, .leaderboard-title, .contact-title {
@@ -910,6 +913,105 @@
             
             .contact-container {
                 padding: 2.5rem 1.5rem;
+            }
+        }
+        
+        /* Additional styles for very small screens */
+        @media (max-width: 480px) {
+            body {
+                overflow-x: hidden;
+                width: 100%;
+            }
+            
+            .logo {
+                font-size: 5rem;
+            }
+            
+            .welcome-text, .journey-text {
+                width: 90%;
+                max-width: 90%;
+                font-size: 1rem;
+                left: 50%;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .app-showcase {
+                gap: 2rem;
+            }
+            
+            .math-equation {
+                font-size: 2.8rem;
+            }
+            
+            .phone-mockup {
+                width: 240px;
+                height: 500px;
+            }
+            
+            .verification-info {
+                padding: 1rem;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            header {
+                padding: 1rem 5%;
+            }
+            
+            .header-logo {
+                font-size: 1.8rem;
+            }
+            
+            .nav-link {
+                font-size: 0.9rem;
+            }
+            
+            .app {
+                padding: 4rem 5% 4rem;
+            }
+            
+            .app-description {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+            
+            .app-features li {
+                font-size: 0.95rem;
+            }
+            
+            .phone-mockup {
+                transform: scale(0.85);
+                margin: 0 auto;
+            }
+            
+            .app-image {
+                margin-top: -20px;
+            }
+            
+            .leaderboard {
+                padding: 5rem 5% 8rem;
+            }
+            
+            .ranking th, .ranking td {
+                padding: 0.8rem 0.5rem;
+                font-size: 0.9rem;
+            }
+            
+            table.ranking {
+                width: 100%;
+                display: block;
+                overflow-x: auto;
             }
         }
         
@@ -1005,14 +1107,25 @@
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    
+                    // Get the target element
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    // Adjust scroll position based on the target
+                    const headerOffset = 80; // Adjust this value to control the offset
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
                         behavior: 'smooth'
                     });
                 });
             });
             
             // Reveal elements on scroll
-            const revealElements = document.querySelectorAll('.section-title, .about-grid, .app-intro, .app-showcase');
+            const revealElements = document.querySelectorAll('.section-title, .about-grid, .app-intro, .app-showcase, .contact-container');
             
             function revealOnScroll() {
                 revealElements.forEach(element => {
@@ -1035,16 +1148,16 @@
 <body>
     <!-- Header with navigation -->
     <header>
-        <a href="#" class="header-logo">BlueJai</a>
+        <a href="#landing" class="header-logo">BlueJai</a>
         <div class="nav-links">
             <a href="#about" class="nav-link">About</a>
             <a href="#app" class="nav-link">App</a>
-            <a href="#leaderboard" class="nav-link">Leaderboard</a>
+            <a href="#contact" class="nav-link">Contact Us</a>
         </div>
     </header>
     
     <!-- Initial Landing Section -->
-    <section class="landing">
+    <section class="landing" id="landing">
         <div class="welcome-text">Welcome to Project</div>
         <div class="logo">BlueJai</div>
         <div class="journey-text">Ready to join us on this journey?</div>
@@ -1301,7 +1414,7 @@
         <div class="contact-container">
             <h2 class="contact-title">Contact Us</h2>
             <p class="contact-text">We'd love to hear from you! Whether you have a question, a suggestion, or just want to say hello, we're here to help.</p>
-            <a href="#" class="btn">Get in Touch</a>
+            <a href="mailto:jaidotreal@gmail.com" class="btn">Get in Touch</a>
         </div>
     </section>
     
@@ -1310,10 +1423,10 @@
         <div class="footer-container">
             <div class="footer-logo">BlueJai</div>
             <div class="footer-links">
-                <a href="#" class="footer-link">Home</a>
-                <a href="#" class="footer-link">About</a>
-                <a href="#" class="footer-link">Services</a>
-                <a href="#" class="footer-link">Contact</a>
+                <a href="#landing" class="footer-link">Home</a>
+                <a href="#about" class="footer-link">About</a>
+                <a href="#app" class="footer-link">Services</a>
+                <a href="mailto:jaidotreal@gmail.com" class="footer-link">Contact</a>
             </div>
             <div class="social-links">
                 <a href="#" class="social-link">

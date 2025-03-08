@@ -51,11 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const navbar = document.createElement('nav');
         navbar.className = 'navbar';
         navbar.innerHTML = `
-            <a href="#" class="logo">BlueJai</a>
+            <a href="#landing" class="logo">BlueJai</a>
             <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#app">App</a>
-                <a href="#leaderboard">Leaderboard</a>
+                <a href="#contact">Contact Us</a>
             </div>
         `;
         
