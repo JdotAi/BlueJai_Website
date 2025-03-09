@@ -33,7 +33,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 1.5rem 10%;
+            padding: 1.5rem 5% 1.5rem 3%;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
@@ -49,6 +49,15 @@
             color: #e6f9f9;
             text-decoration: none;
             font-family: 'Sacramento', cursive;
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-logo img {
+            height: 35px;
+            width: auto;
+            margin-right: 10px;
+            object-fit: contain;
         }
         
         .nav-links {
@@ -840,6 +849,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding-top: 0;
         }
         
         .footer-logo img {
@@ -847,6 +857,8 @@
             width: auto;
             margin-right: 10px;
             object-fit: contain;
+            position: static;
+            transform: none;
         }
         
         .footer-links {
@@ -981,11 +993,15 @@
             }
             
             header {
-                padding: 1rem 5%;
+                padding: 1rem 5% 1rem 2%;
             }
             
             .header-logo {
                 font-size: 1.8rem;
+            }
+            
+            .header-logo img {
+                height: 30px;
             }
             
             .nav-link {
@@ -1169,7 +1185,10 @@
 <body>
     <!-- Header with navigation -->
     <header>
-        <a href="#landing" class="header-logo">BlueJai</a>
+        <a href="#landing" class="header-logo">
+            <img src="Images/blueJai_logo_4_no_back.png" alt="BlueJai Logo">
+            BlueJai
+        </a>
         <div class="nav-links">
             <a href="#about" class="nav-link">About</a>
             <a href="#app" class="nav-link">App</a>
