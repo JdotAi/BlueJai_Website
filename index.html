@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BlueJai</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Images/blueJai_logo_4_no_back.png">
+    <link rel="apple-touch-icon" href="Images/blueJai_logo_4_no_back.png">
+    <link rel="shortcut icon" type="image/png" href="Images/blueJai_logo_4_no_back.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Sacramento&family=Special+Elite&display=swap');
         
@@ -35,7 +39,8 @@
             justify-content: space-between;
             align-items: center;
             transition: all 0.3s ease;
-            background-color: rgba(10, 10, 10, 0.95);
+            background-color: #0A0A0A;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
         
         .header-logo {
@@ -832,6 +837,16 @@
             color: #e6f9f9;
             text-shadow: none;
             font-family: 'Sacramento', cursive;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+            width: auto;
+            margin-right: 10px;
+            object-fit: contain;
         }
         
         .footer-links {
@@ -1427,11 +1442,14 @@
     <!-- Footer -->
     <footer>
         <div class="footer-container">
-            <div class="footer-logo">BlueJai</div>
+            <div class="footer-logo">
+                <img src="Images/blueJai_logo_4_no_back.png" alt="BlueJai Logo">
+                BlueJai
+            </div>
             <div class="footer-links">
                 <a href="#landing" class="footer-link">Home</a>
                 <a href="#about" class="footer-link">About</a>
-                <a href="#app" class="footer-link">Services</a>
+                <a href="#app" class="footer-link">Apps</a>
                 <a href="mailto:jaidotreal@gmail.com" class="footer-link">Contact</a>
             </div>
             <div class="social-links">
