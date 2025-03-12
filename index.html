@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" href="Images/Logo_2_2_no_back.png">
     <link rel="shortcut icon" type="image/png" href="Images/Logo_2_2_no_back.png">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Sacramento&family=Special+Elite&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Sacramento&family=Special+Elite&family=Dancing+Script:wght@400;700&family=Great+Vibes&display=swap');
         
         * {
             margin: 0;
@@ -227,13 +227,33 @@
         }
         
         .quote-text {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 300;
             letter-spacing: 0.5px;
             color: #e6f9f9;
             line-height: 1.4;
             text-shadow: 0 0 10px rgba(230, 249, 249, 0.2);
             font-style: italic;
+        }
+        
+        .quote-artist {
+            font-family: 'Great Vibes', cursive;
+            font-style: normal;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: #e6f9f9;
+            text-shadow: 0 0 5px rgba(230, 249, 249, 0.3);
+            margin: 0 0.1rem;
+        }
+        
+        .quote-future {
+            font-family: 'Great Vibes', cursive;
+            font-style: normal;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: #e6f9f9;
+            text-shadow: 0 0 5px rgba(230, 249, 249, 0.3);
+            margin: 0 0.1rem;
         }
         
         .about-grid {
@@ -1196,6 +1216,7 @@
             const revealElements = document.querySelectorAll('.section-title, .app-intro, .app-showcase, .contact-container');
             const quoteReveal = document.querySelector('.quote-reveal');
             const landingSection = document.querySelector('.landing');
+            const landingElements = document.querySelectorAll('.welcome-text, .logo, .journey-text, .scroll-indicator');
             const aboutSection = document.querySelector('.about');
             const appSection = document.querySelector('.app');
             
@@ -1228,7 +1249,41 @@
                     const fadeOutEnd = landingHeight + (aboutHeight * 0.5); // Completely faded by 50% of about section
                     const fadeOutProgress = (scrollY - fadeOutStart) / (fadeOutEnd - fadeOutStart);
                     
-                    // Apply the appropriate opacity based on scroll position
+                    // Phase 3: Landing elements fade out as we scroll down
+                    const landingFadeOutStart = windowHeight * 0.1; // Start fading out at 10% of scroll
+                    const landingFadeOutEnd = windowHeight * 0.4; // Completely gone by 40% of scroll
+                    const landingFadeOutProgress = (scrollY - landingFadeOutStart) / (landingFadeOutEnd - landingFadeOutStart);
+                    
+                    // Fade out landing elements
+                    if (scrollY >= landingFadeOutStart) {
+                        const opacity = Math.max(1 - landingFadeOutProgress, 0);
+                        
+                        // Make welcome text fade out faster than other elements
+                        landingElements.forEach(element => {
+                            if (element.classList.contains('welcome-text')) {
+                                // Welcome text fades out twice as fast
+                                const welcomeOpacity = Math.max(1 - (landingFadeOutProgress * 2), 0);
+                                element.style.opacity = welcomeOpacity;
+                            } else {
+                                element.style.opacity = opacity;
+                            }
+                        });
+                    } else {
+                        landingElements.forEach(element => {
+                            // Restore original opacity values
+                            if (element.classList.contains('welcome-text')) {
+                                element.style.opacity = 0.75; // Original opacity
+                            } else if (element.classList.contains('journey-text')) {
+                                element.style.opacity = 0.75; // Original opacity
+                            } else if (element.classList.contains('scroll-indicator')) {
+                                element.style.opacity = 0.6; // Original opacity
+                            } else {
+                                element.style.opacity = 1;
+                            }
+                        });
+                    }
+                    
+                    // Apply the appropriate opacity based on scroll position for quote
                     if (scrollY < fadeInStart) {
                         // Before fade-in zone: keep invisible
                         quoteReveal.style.opacity = 0;
@@ -1288,7 +1343,7 @@
         <div class="about-container">
             <div class="quote-reveal">
                 <div class="quote-text">
-                    The artist within holds the brush to your future.
+                    The <span class="quote-artist">Artist</span> within you holds the brush to your <span class="quote-future">Future</span>.
                 </div>
             </div>
         </div>
