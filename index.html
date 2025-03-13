@@ -707,6 +707,37 @@
             font-weight: 600;
         }
         
+        .instagram-link {
+            color: #F2E72B;
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .instagram-link:hover {
+            color: #FFFFFF;
+        }
+        
+        .instagram-link::after {
+            content: "";
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            margin-left: 5px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2E72B"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+        
+        .instagram-link:hover::after {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
         .score {
             font-weight: 700;
         }
@@ -1682,13 +1713,19 @@
                         `<span class="pending-badge">⏳ Pending</span>` : 
                         "";
                 
+                // Get player name and create Instagram link if verified
                 const playerName = item.socialMediaHandle ? 
                     item.socialMediaHandle : 
                     item.username || 'Anonymous';
                 
+                // Create Instagram link for verified users
+                const playerNameDisplay = item.isVerified && item.socialMediaHandle ? 
+                    `<a href="https://instagram.com/${item.socialMediaHandle.replace('@', '')}" target="_blank" class="instagram-link">${playerName}</a>` : 
+                    playerName;
+                
                 row.innerHTML = `
                     <td class="rank">${rank}</td>
-                    <td class="player-name">${playerName}</td>
+                    <td class="player-name">${playerNameDisplay}</td>
                     <td>${verificationStatus}</td>
                     <td class="score">${item.score}</td>
                 `;
@@ -2088,7 +2125,7 @@
             <!-- Add a note about Instagram verification -->
             <div class="verification-info">
                 <h3>Instagram Verification</h3>
-                <p>Link your Instagram account to verify your identity on our leaderboards! Verified accounts display a checkmark and have their Instagram username highlighted.</p>
+                <p>Link your Instagram account to verify your identity on our leaderboards! Verified accounts display a checkmark and have their Instagram username highlighted as a clickable link to their profile.</p>
             </div>
         </div>
         
