@@ -1378,8 +1378,8 @@
             padding: 0.4rem 0.8rem;
             border-radius: 20px;
             font-size: 0.9rem;
-            min-width: 150px;
-            width: 150px; /* Fixed width to prevent box size changes */
+            min-width: 170px; /* Increased width to accommodate the timer better */
+            width: 170px; /* Fixed width to prevent box size changes */
         }
         
         .refresh-text {
@@ -1393,15 +1393,16 @@
         
         .seconds-container {
             display: inline-block;
-            width: 30px; /* Fixed width container for seconds and 's' */
+            width: 55px; /* Increased width for minutes:seconds format */
             text-align: left;
+            margin-left: 4px; /* Add a bit of spacing after "Next update in" */
         }
         
         .seconds-left {
             font-weight: bold;
             color: #F2E72B;
             display: inline-block;
-            width: 20px; /* Fixed width for just the number */
+            width: 45px; /* Increased width for minutes:seconds format */
             text-align: right; /* Right-align the text for consistent positioning */
         }
         
@@ -1417,7 +1418,7 @@
             width: 100%;
             background-color: #F2E72B;
             border-radius: 2px;
-            transition: width 1s linear;
+            transition: width 0.1s linear; /* Smoother transition */
         }
     </style>
     <!-- Added JavaScript files for animations and swipe-to-refresh -->
@@ -1444,12 +1445,12 @@
         // Cache and refresh variables
         let refreshInterval;
         let nextRefreshTime;
-        let secondsToNextRefresh = 60;
-        const REFRESH_INTERVAL_MS = 60000; // 60 seconds
+        let secondsToNextRefresh = 1800;
+        const REFRESH_INTERVAL_MS = 1800000; // 30 minutes
         const CACHE_KEY_DAILY = 'sumslam_daily_leaderboard';
         const CACHE_KEY_ALLTIME = 'sumslam_alltime_leaderboard';
         const CACHE_KEY_PLAYERS = 'sumslam_active_players';
-        const CACHE_EXPIRY = 5 * 60 * 1000; // 5 minutes cache expiry
+        const CACHE_EXPIRY = 30 * 60 * 1000; // 30 minutes cache expiry
         
         // Handle Firebase connection errors
         function showConnectionError(errorMessage, retryFunction) {
@@ -1743,7 +1744,7 @@
                 refreshCountdown.className = 'refresh-countdown';
                 refreshCountdown.innerHTML = `
                     <div class="refresh-text">
-                        Next update in <div class="seconds-container"><span class="seconds-left">60</span>s</div>
+                        Next update in<div class="seconds-container"><span class="seconds-left">30:00</span></div>
                     </div>
                     <div class="refresh-progress">
                         <div class="refresh-bar"></div>
@@ -1757,7 +1758,7 @@
         
         // Reset the countdown timer
         function resetRefreshCountdown() {
-            secondsToNextRefresh = 60;
+            secondsToNextRefresh = 1800; // 30 minutes in seconds
             nextRefreshTime = Date.now() + REFRESH_INTERVAL_MS;
             
             // Update the countdown display
@@ -1780,10 +1781,14 @@
             const refreshBar = document.querySelector('.refresh-bar');
             
             if (secondsLeftElement && refreshBar) {
-                secondsLeftElement.textContent = secondsToNextRefresh;
+                // Format the time display - show minutes and seconds
+                const minutes = Math.floor(secondsToNextRefresh / 60);
+                const seconds = secondsToNextRefresh % 60;
+                const formattedTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                secondsLeftElement.textContent = formattedTime;
                 
                 // Update progress bar (from 100% to 0%)
-                const progressPercent = (secondsToNextRefresh / 60) * 100;
+                const progressPercent = (secondsToNextRefresh / 1800) * 100;
                 refreshBar.style.width = `${progressPercent}%`;
             }
         }
