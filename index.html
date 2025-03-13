@@ -1348,18 +1348,30 @@
             border-radius: 20px;
             font-size: 0.9rem;
             min-width: 150px;
+            width: 150px; /* Fixed width to prevent box size changes */
         }
         
         .refresh-text {
             display: flex;
             justify-content: center;
+            align-items: center; /* Added to vertically align items */
             margin-bottom: 4px;
+            position: relative;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        
+        .seconds-container {
+            display: inline-block;
+            width: 30px; /* Fixed width container for seconds and 's' */
+            text-align: left;
         }
         
         .seconds-left {
             font-weight: bold;
             color: #F2E72B;
-            margin: 0 2px;
+            display: inline-block;
+            width: 20px; /* Fixed width for just the number */
+            text-align: right; /* Right-align the text for consistent positioning */
         }
         
         .refresh-progress {
@@ -1693,7 +1705,9 @@
                 const refreshCountdown = document.createElement('div');
                 refreshCountdown.className = 'refresh-countdown';
                 refreshCountdown.innerHTML = `
-                    <div class="refresh-text">Next update in <span class="seconds-left">60</span>s</div>
+                    <div class="refresh-text">
+                        Next update in <div class="seconds-container"><span class="seconds-left">60</span>s</div>
+                    </div>
                     <div class="refresh-progress">
                         <div class="refresh-bar"></div>
                     </div>
