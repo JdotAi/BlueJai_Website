@@ -372,10 +372,12 @@
         }
         
         .app-description {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin-bottom: 2rem;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
             color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+            letter-spacing: 0.2px;
         }
         
         .app-features {
@@ -391,17 +393,28 @@
         }
         
         .app-features li:before {
-            content: "✓";
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            background-color: #4D6CFA;
-            color: white;
-            border-radius: 50%;
+            content: "+";
+            display: inline-block;
             margin-right: 1rem;
-            font-size: 0.8rem;
+            font-size: 1.8rem;
+            color: #F2E72B;
+            text-shadow: 0 0 5px rgba(242, 231, 43, 0.5);
+            line-height: 0;
+            position: relative;
+            top: 0px;
+            font-weight: bold;
+        }
+        
+        .app-features li:nth-child(2):before {
+            content: "−";
+        }
+        
+        .app-features li:nth-child(3):before {
+            content: "×";
+        }
+        
+        .app-features li:nth-child(4):before {
+            content: "÷";
         }
         
         .app-image {
@@ -1184,13 +1197,594 @@
                 text-shadow: 0 0 5px #e6f9f9, 0 0 15px #e6f9f9, 0 0 30px rgba(230, 249, 249, 0.5);
             }
         }
+        
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #FF3B3B;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: live-pulse 1.5s infinite;
+        }
+        
+        @keyframes live-pulse {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .player-count {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .player-count-value {
+            font-weight: bold;
+            color: #F2E72B;
+            margin-right: 5px;
+        }
+        
+        .update-notification {
+            position: fixed;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(242, 231, 43, 0.9);
+            color: #DB1584;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: bottom 0.3s ease;
+        }
+        
+        .update-notification.show {
+            bottom: 20px;
+        }
+        
+        .loading-state {
+            text-align: center;
+            padding: 2rem !important;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #F2E72B;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 0.5rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .connection-error {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            z-index: 1100;
+            text-align: center;
+            max-width: 90%;
+            width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .error-message {
+            margin-bottom: 1.5rem;
+            color: #FF6B6B;
+            font-size: 1.1rem;
+        }
+        
+        .retry-btn {
+            background-color: #F2E72B;
+            color: #DB1584;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .retry-btn:hover {
+            background-color: #FFE74C;
+            transform: translateY(-2px);
+        }
+        
+        .refresh-countdown {
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            min-width: 150px;
+        }
+        
+        .refresh-text {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 4px;
+        }
+        
+        .seconds-left {
+            font-weight: bold;
+            color: #F2E72B;
+            margin: 0 2px;
+        }
+        
+        .refresh-progress {
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .refresh-bar {
+            height: 100%;
+            width: 100%;
+            background-color: #F2E72B;
+            border-radius: 2px;
+            transition: width 1s linear;
+        }
     </style>
     <!-- Added JavaScript files for animations and swipe-to-refresh -->
     <script src="animations.js" defer></script>
     <script src="swipe.js" defer></script>
+    
+    <!-- Firebase scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    
     <script>
-        // Smooth scroll and reveal animations
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "FIREBASE_API_KEY_PLACEHOLDER",
+            projectId: "sumslam-528de",
+            storageBucket: "sumslam-528de.firebasestorage.app",
+            appId: "1:1068106258361:ios:5205466c45b40c2f238868"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        // Cache and refresh variables
+        let refreshInterval;
+        let nextRefreshTime;
+        let secondsToNextRefresh = 60;
+        const REFRESH_INTERVAL_MS = 60000; // 60 seconds
+        const CACHE_KEY_DAILY = 'sumslam_daily_leaderboard';
+        const CACHE_KEY_ALLTIME = 'sumslam_alltime_leaderboard';
+        const CACHE_KEY_PLAYERS = 'sumslam_active_players';
+        const CACHE_EXPIRY = 5 * 60 * 1000; // 5 minutes cache expiry
+        
+        // Handle Firebase connection errors
+        function showConnectionError(errorMessage, retryFunction) {
+            const errorNotification = document.createElement('div');
+            errorNotification.className = 'connection-error';
+            errorNotification.innerHTML = `
+                <div class="error-message">${errorMessage}</div>
+                <button class="retry-btn">Retry Connection</button>
+            `;
+            document.body.appendChild(errorNotification);
+            
+            // Add retry button functionality
+            errorNotification.querySelector('.retry-btn').addEventListener('click', () => {
+                document.body.removeChild(errorNotification);
+                if (typeof retryFunction === 'function') {
+                    retryFunction();
+                }
+            });
+        }
+        
+        // Start the leaderboard system with initial load and periodic refresh
+        function initLeaderboard() {
+            // Show loading state first
+            document.querySelector("#daily-leaderboard tbody").innerHTML = `
+                <tr>
+                    <td colspan="3" class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <div>Loading leaderboard data...</div>
+                    </td>
+                </tr>
+            `;
+            
+            document.querySelector("#all-time-leaderboard tbody").innerHTML = `
+                <tr>
+                    <td colspan="4" class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <div>Loading leaderboard data...</div>
+                    </td>
+                </tr>
+            `;
+            
+            // Try to load from cache first for immediate display while fresh data loads
+            loadFromCache();
+            
+            // Then fetch fresh data
+            fetchLeaderboardData();
+            
+            // Set up refresh countdown display
+            startRefreshCountdown();
+            
+            // Set up periodic refresh
+            refreshInterval = setInterval(() => {
+                fetchLeaderboardData();
+                resetRefreshCountdown();
+            }, REFRESH_INTERVAL_MS);
+            
+            // Clean up on page unload
+            window.addEventListener('beforeunload', () => {
+                if (refreshInterval) {
+                    clearInterval(refreshInterval);
+                }
+            });
+        }
+        
+        // Try to load from localStorage cache
+        function loadFromCache() {
+            try {
+                // Check daily leaderboard cache
+                const dailyCache = localStorage.getItem(CACHE_KEY_DAILY);
+                if (dailyCache) {
+                    const cacheData = JSON.parse(dailyCache);
+                    // Only use cache if it's not expired
+                    if (Date.now() - cacheData.timestamp < CACHE_EXPIRY) {
+                        renderDailyLeaderboard(cacheData.data);
+                        console.log('Daily leaderboard loaded from cache');
+                    }
+                }
+                
+                // Check all-time leaderboard cache
+                const alltimeCache = localStorage.getItem(CACHE_KEY_ALLTIME);
+                if (alltimeCache) {
+                    const cacheData = JSON.parse(alltimeCache);
+                    if (Date.now() - cacheData.timestamp < CACHE_EXPIRY) {
+                        renderAllTimeLeaderboard(cacheData.data);
+                        console.log('All-time leaderboard loaded from cache');
+                    }
+                }
+                
+                // Check player count cache
+                const playersCache = localStorage.getItem(CACHE_KEY_PLAYERS);
+                if (playersCache) {
+                    const cacheData = JSON.parse(playersCache);
+                    if (Date.now() - cacheData.timestamp < CACHE_EXPIRY) {
+                        document.querySelector('.player-count-value').textContent = cacheData.count;
+                        console.log('Player count loaded from cache');
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading from cache:', error);
+            }
+        }
+        
+        // Fetch fresh data from Firestore
+        function fetchLeaderboardData() {
+            console.log('Fetching fresh leaderboard data from Firestore');
+            
+            // Get current date in EST timezone for daily leaderboard
+            const now = new Date();
+            const estTimeZone = "America/New_York";
+            const estDate = new Date(now.toLocaleString("en-US", {timeZone: estTimeZone}));
+            const year = estDate.getFullYear();
+            const month = estDate.getMonth() + 1; // JavaScript months are 0-indexed
+            const day = estDate.getDate();
+            
+            console.log(`Fetching daily leaderboard for ${year}-${month}-${day} (EST)`);
+            
+            // Daily Leaderboard fetch
+            db.collection("daily_leaderboard")
+                .where("year", "==", year)
+                .where("month", "==", month)
+                .where("day", "==", day)
+                .orderBy("score", "desc")
+                .limit(10)
+                .get()
+                .then((querySnapshot) => {
+                    // Convert query snapshot to array of data
+                    const data = [];
+                    querySnapshot.forEach(doc => {
+                        data.push(doc.data());
+                    });
+                    
+                    // Cache the data
+                    localStorage.setItem(CACHE_KEY_DAILY, JSON.stringify({
+                        timestamp: Date.now(),
+                        data: data
+                    }));
+                    
+                    // Render the data
+                    renderDailyLeaderboard(data);
+                    
+                    // Show update notification
+                    showUpdateNotification("Daily leaderboard updated");
+                })
+                .catch((error) => {
+                    console.error("Error fetching daily leaderboard: ", error);
+                });
+            
+            // All-time Leaderboard fetch
+            db.collection("leaderboard")
+                .orderBy("score", "desc")
+                .limit(10)
+                .get()
+                .then((querySnapshot) => {
+                    // Convert query snapshot to array of data
+                    const data = [];
+                    querySnapshot.forEach(doc => {
+                        data.push(doc.data());
+                    });
+                    
+                    // Cache the data
+                    localStorage.setItem(CACHE_KEY_ALLTIME, JSON.stringify({
+                        timestamp: Date.now(),
+                        data: data
+                    }));
+                    
+                    // Render the data
+                    renderAllTimeLeaderboard(data);
+                    
+                    // Show update notification
+                    showUpdateNotification("All-time leaderboard updated");
+                })
+                .catch((error) => {
+                    console.error("Error fetching all-time leaderboard: ", error);
+                });
+            
+            // Active player count fetch - try stats document first
+            db.collection("activeUsers")
+                .doc("stats")
+                .get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const playerCount = data.count || 0;
+                        document.querySelector('.player-count-value').textContent = playerCount;
+                        
+                        // Cache the player count
+                        localStorage.setItem(CACHE_KEY_PLAYERS, JSON.stringify({
+                            timestamp: Date.now(),
+                            count: playerCount
+                        }));
+                        
+                        // Show update notification
+                        showUpdateNotification(`${playerCount} players online`);
+                    } else {
+                        // Fallback - try to count active users directly from Firestore
+                        countActiveUsers();
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching active player count: ", error);
+                    // Fallback - try to count active users directly
+                    countActiveUsers();
+                });
+        }
+        
+        // Render daily leaderboard data
+        function renderDailyLeaderboard(data) {
+            const dailyLeaderboardBody = document.querySelector("#daily-leaderboard tbody");
+            dailyLeaderboardBody.innerHTML = ""; // Clear existing data
+            
+            if (!data || data.length === 0) {
+                dailyLeaderboardBody.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="loading-state">
+                            <div>No scores recorded today yet!</div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let rank = 1;
+            data.forEach((item) => {
+                const row = document.createElement("tr");
+                
+                row.innerHTML = `
+                    <td class="rank">${rank}</td>
+                    <td class="player-name">${item.username || 'Anonymous'}</td>
+                    <td class="score">${item.score}</td>
+                `;
+                
+                dailyLeaderboardBody.appendChild(row);
+                rank++;
+            });
+        }
+        
+        // Render all-time leaderboard data
+        function renderAllTimeLeaderboard(data) {
+            const allTimeLeaderboardBody = document.querySelector("#all-time-leaderboard tbody");
+            allTimeLeaderboardBody.innerHTML = ""; // Clear existing data
+            
+            if (!data || data.length === 0) {
+                allTimeLeaderboardBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="loading-state">
+                            <div>No all-time scores recorded yet!</div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let rank = 1;
+            data.forEach((item) => {
+                const row = document.createElement("tr");
+                
+                // Determine if verified based on Instagram link
+                const verificationStatus = item.isVerified ? 
+                    `<span class="verified-badge">✓ Verified</span>` : 
+                    item.isPendingVerification ? 
+                        `<span class="pending-badge">⏳ Pending</span>` : 
+                        "";
+                
+                const playerName = item.socialMediaHandle ? 
+                    item.socialMediaHandle : 
+                    item.username || 'Anonymous';
+                
+                row.innerHTML = `
+                    <td class="rank">${rank}</td>
+                    <td class="player-name">${playerName}</td>
+                    <td>${verificationStatus}</td>
+                    <td class="score">${item.score}</td>
+                `;
+                
+                allTimeLeaderboardBody.appendChild(row);
+                rank++;
+            });
+        }
+        
+        // Create countdown for next refresh
+        function startRefreshCountdown() {
+            // Create indicator elements if they don't exist
+            if (!document.querySelector('.refresh-countdown')) {
+                const refreshCountdown = document.createElement('div');
+                refreshCountdown.className = 'refresh-countdown';
+                refreshCountdown.innerHTML = `
+                    <div class="refresh-text">Next update in <span class="seconds-left">60</span>s</div>
+                    <div class="refresh-progress">
+                        <div class="refresh-bar"></div>
+                    </div>
+                `;
+                document.querySelector('.stats-container').appendChild(refreshCountdown);
+            }
+            
+            resetRefreshCountdown();
+        }
+        
+        // Reset the countdown timer
+        function resetRefreshCountdown() {
+            secondsToNextRefresh = 60;
+            nextRefreshTime = Date.now() + REFRESH_INTERVAL_MS;
+            
+            // Update the countdown display
+            updateRefreshCountdown();
+            
+            // Set up the countdown timer
+            const countdownInterval = setInterval(() => {
+                secondsToNextRefresh = Math.max(0, Math.floor((nextRefreshTime - Date.now()) / 1000));
+                updateRefreshCountdown();
+                
+                if (secondsToNextRefresh <= 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+        }
+        
+        // Update the countdown display
+        function updateRefreshCountdown() {
+            const secondsLeftElement = document.querySelector('.seconds-left');
+            const refreshBar = document.querySelector('.refresh-bar');
+            
+            if (secondsLeftElement && refreshBar) {
+                secondsLeftElement.textContent = secondsToNextRefresh;
+                
+                // Update progress bar (from 100% to 0%)
+                const progressPercent = (secondsToNextRefresh / 60) * 100;
+                refreshBar.style.width = `${progressPercent}%`;
+            }
+        }
+        
+        // Fallback method to count active users
+        function countActiveUsers() {
+            const cutoffTime = new Date();
+            cutoffTime.setMinutes(cutoffTime.getMinutes() - 5); // Consider users active in the last 5 minutes
+            
+            db.collection("devices")
+                .where("lastActive", ">=", cutoffTime)
+                .get()
+                .then((snapshot) => {
+                    const count = snapshot.size;
+                    document.querySelector('.player-count-value').textContent = count;
+                    
+                    // Cache the player count
+                    localStorage.setItem(CACHE_KEY_PLAYERS, JSON.stringify({
+                        timestamp: Date.now(),
+                        count: count
+                    }));
+                })
+                .catch((error) => {
+                    console.error("Error counting active users: ", error);
+                    document.querySelector('.player-count-value').textContent = "?";
+                });
+        }
+        
+        // Show update notification
+        function showUpdateNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'update-notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Trigger animation
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            // Remove after animation
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
+        }
+        
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Call original animation setup code
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
@@ -1308,6 +1902,9 @@
             
             // Listen for scroll events
             window.addEventListener('scroll', handleScroll);
+            
+            // Initialize leaderboard with polling
+            initLeaderboard();
         });
     </script>
 </head>
@@ -1368,14 +1965,13 @@
             
             <div class="app-showcase">
                 <div class="app-content">
-                    <p class="app-description">Sum Slam is an addictive math game where you solve equations by swiping up or down toward the correct answer. Based on the screenshots, you'll see a math problem like "11 / 11" and need to swipe toward "1" to score points. Race against a timer that gets shorter as you advance, and see if you can beat your high score!</p>
+                    <p class="app-description">Sum Slam is an addictive math game where you solve equations by swiping up or down toward the correct answer. Race against a timer that gets shorter as you advance, and see if you can beat your high score!</p>
                     
                     <ul class="app-features">
                         <li>Challenge yourself with addition, subtraction, multiplication, and division</li>
                         <li>Intuitive swipe controls - just swipe toward the answer</li>
                         <li>Race against a countdown timer that decreases with each level</li>
                         <li>Track your high score and compete on global leaderboards</li>
-                        <li>"Second Chance" feature gives you one more try when you fail</li>
                     </ul>
                     
                     <a href="https://testflight.apple.com/join/xenz4NBW" class="btn app-cta">Download Now</a>
@@ -1433,12 +2029,17 @@
             <div class="leaderboard-intro">
                 <h2 class="leaderboard-title">Leaderboards</h2>
                 <p class="leaderboard-subtitle">Challenge yourself to reach the top and see your name featured on our daily and all-time leaderboards</p>
+                <div class="stats-container">
+                    <div class="live-indicator">
+                        <span class="live-dot"></span> Live Updates
+                    </div>
+                </div>
             </div>
             
             <div class="leaderboard-tables">
                 <div class="leaderboard-table">
                     <h3 class="table-title">Daily Leaders</h3>
-                    <table class="ranking">
+                    <table class="ranking" id="daily-leaderboard">
                         <thead>
                             <tr>
                                 <th>Rank</th>
@@ -1447,63 +2048,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="rank">1</td>
-                                <td class="player-name">MathWizard</td>
-                                <td class="score">783</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">2</td>
-                                <td class="player-name">NumbersNinja</td>
-                                <td class="score">761</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">3</td>
-                                <td class="player-name">SwipeMaster99</td>
-                                <td class="score">742</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">4</td>
-                                <td class="player-name">EquationExpert</td>
-                                <td class="score">739</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">5</td>
-                                <td class="player-name">MathMaven</td>
-                                <td class="score">722</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">1</td>
-                                <td class="player-name">MathWizard</td>
-                                <td class="score">583</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">2</td>
-                                <td class="player-name">CalculatorKing</td>
-                                <td class="score">547</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">3</td>
-                                <td class="player-name">NumbersNinja</td>
-                                <td class="score">529</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">4</td>
-                                <td class="player-name">MathMaster42</td>
-                                <td class="score">502</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">5</td>
-                                <td class="player-name">SwipeGenius</td>
-                                <td class="score">486</td>
-                            </tr>
+                            <!-- Live data will be populated here -->
                         </tbody>
                     </table>
                 </div>
                 
                 <div class="leaderboard-table">
                     <h3 class="table-title">All-Time Champions</h3>
-                    <table class="ranking">
+                    <table class="ranking" id="all-time-leaderboard">
                         <thead>
                             <tr>
                                 <th>Rank</th>
@@ -1513,36 +2065,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="rank">1</td>
-                                <td class="player-name">@MathWizard</td>
-                                <td><span class="verified-badge">✓ Verified</span></td>
-                                <td class="score">1024</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">2</td>
-                                <td class="player-name">NumbersNinja</td>
-                                <td></td>
-                                <td class="score">986</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">3</td>
-                                <td class="player-name">@SwipeQueen</td>
-                                <td><span class="verified-badge">✓ Verified</span></td>
-                                <td class="score">951</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">4</td>
-                                <td class="player-name">@CalcKing</td>
-                                <td><span class="pending-badge">⏳ Pending</span></td>
-                                <td class="score">889</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">5</td>
-                                <td class="player-name">MathMaven</td>
-                                <td></td>
-                                <td class="score">832</td>
-                            </tr>
+                            <!-- Live data will be populated here -->
                         </tbody>
                     </table>
                 </div>

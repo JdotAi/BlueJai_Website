@@ -1,0 +1,35 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Replace API keys
+        run: |
+          # Ensure the directories exist
+          mkdir -p .github/temp
+          
+          # Create a copy of index.html with API keys replaced
+          cp index.html .github/temp/index.html.template
+          sed "s/FIREBASE_API_KEY_PLACEHOLDER/${{ secrets.FIREBASE_API_KEY }}/g" .github/temp/index.html.template > index.html
+          
+          # Verify the replacement worked (without revealing the key)
+          echo "✅ API key replacement completed"
+      
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: .
+          clean: true 
