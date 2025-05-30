@@ -1517,6 +1517,14 @@
             border: 2px solid #4D6CFA;
         }
         
+        .blog-post.bluejai-post .post-image {
+            background: linear-gradient(135deg, #4D6CFA, #6B73FF);
+        }
+        
+        .blog-post.sumslam-post .post-image {
+            background: linear-gradient(135deg, #DB1584, #FF1493);
+        }
+        
         .post-image {
             position: relative;
             height: 150px;
@@ -1526,8 +1534,8 @@
         .post-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: center top;
+            object-fit: contain;
+            object-position: center;
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
@@ -1690,6 +1698,14 @@
 }
     .post-title { font-size: 1.1rem; }
 }
+        .blog-post.sumslam-post .post-image img {
+            border-radius: 15px;
+            transform: scale(0.8);
+        }
+        
+        .blog-post.sumslam-post:hover .post-image img {
+            transform: scale(0.84);
+        }
     </style>
     <!-- Added JavaScript files for animations and swipe-to-refresh -->
     <script src="animations.js" defer></script>
@@ -2423,9 +2439,9 @@
             </div>
             
             <div class="blog-grid">
-                <a href="sumslam-blog.html" class="blog-post featured">
+                <a href="sumslam-blog.html" class="blog-post featured sumslam-post">
                     <div class="post-image">
-                        <img src="Images/MadMathFull copy.jpg" alt="Sum Slam Development">
+                        <img src="Images/sumslam_icon.png" alt="Sum Slam Development">
                         <div class="post-badge">Featured</div>
                     </div>
                     <div class="post-content">
@@ -2443,7 +2459,7 @@
                     </div>
                 </a>
                 
-                <a href="bluejai-website-blog.html" class="blog-post">
+                <a href="bluejai-website-blog.html" class="blog-post bluejai-post">
                     <div class="post-image">
                         <img src="Images/Logo_2_3_no_back.png" alt="BlueJai Website">
                     </div>
