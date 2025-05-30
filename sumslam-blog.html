@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sum Slam: From Concept to App Store - BlueJai</title>
+    <link rel="icon" type="image/png" href="Images/Logo_2_3_no_back.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Sacramento&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+            line-height: 1.6;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5% 1.5rem 3%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header-logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #e6f9f9;
+            text-decoration: none;
+            font-family: 'Sacramento', cursive;
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-logo img {
+            height: 35px;
+            width: auto;
+            margin-right: 10px;
+            object-fit: contain;
+        }
+        
+        .back-btn {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #e6f9f9;
+        }
+        
+        .blog-post-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+        
+        .post-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .post-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .post-date {
+            color: #4D6CFA;
+            font-weight: 500;
+        }
+        
+        .post-category {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .post-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #e6f9f9;
+        }
+        
+        .post-featured-image {
+            width: 100%;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+        
+        .post-featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .post-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .tag {
+            background: rgba(77, 108, 250, 0.2);
+            color: #4D6CFA;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(77, 108, 250, 0.3);
+        }
+        
+        .post-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .post-content h2 {
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1rem;
+            color: #e6f9f9;
+        }
+        
+        .post-content h3 {
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem;
+            color: #4D6CFA;
+        }
+        
+        .post-content p {
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .post-content ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        .post-content li {
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid #4D6CFA;
+        }
+        
+        .app-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #4D6CFA, #6B73FF);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .app-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(77, 108, 250, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .post-title {
+                font-size: 2rem;
+            }
+            
+            .blog-post-container {
+                padding: 6rem 1rem 2rem;
+            }
+            
+            .post-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="header-logo">
+            <img src="Images/longer1.gif" alt="BlueJai Logo">
+            BlueJai
+        </a>
+        <a href="index.html#blog" class="back-btn">← Back to Blog</a>
+    </header>
+    
+    <article class="blog-post-container">
+        <div class="post-header">
+            <div class="post-meta">
+                <span class="post-date">January 2025</span>
+                <span class="post-category">Mobile Development</span>
+            </div>
+            <h1 class="post-title">Sum Slam: From Concept to App Store</h1>
+            <div class="post-featured-image">
+                <img src="Images/MadMathFull copy.jpg" alt="Sum Slam App">
+            </div>
+            <div class="post-tags">
+                <span class="tag">Swift</span>
+                <span class="tag">iOS</span>
+                <span class="tag">Game Development</span>
+                <span class="tag">UIKit</span>
+                <span class="tag">Firebase</span>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <p>Building Sum Slam from concept to a published iOS app was an incredible journey that taught me so much about mobile development, user experience design, and the Apple ecosystem. Here's the complete story of how this fast-paced math game came to life.</p>
+            
+            <h2>🎯 The Initial Concept</h2>
+            <p>The idea for Sum Slam came from a simple observation: most math games were either too slow-paced or too complicated. I wanted to create something that would get your heart racing while sharpening your mental math skills. The core concept was simple:</p>
+            
+            <div class="highlight-box">
+                <p><strong>Challenge:</strong> Solve math equations as quickly as possible by swiping toward the correct answer, with the timer getting shorter after each correct answer.</p>
+            </div>
+            
+            <h2>⚡ Why I Built It</h2>
+            <p>Several factors motivated me to build Sum Slam:</p>
+            <ul>
+                <li><strong>Personal Challenge:</strong> I wanted to test my iOS development skills with a complete, polished app</li>
+                <li><strong>Market Gap:</strong> Most math games lacked the urgency and excitement I was looking for</li>
+                <li><strong>Learning Opportunity:</strong> This project would let me explore Swift, UIKit, animations, and App Store deployment</li>
+                <li><strong>User Engagement:</strong> I believed that adding time pressure would make math practice addictive rather than boring</li>
+            </ul>
+            
+            <h2>🛠 Technical Implementation</h2>
+            
+            <h3>Core Technologies</h3>
+            <p>I built Sum Slam using modern iOS development practices:</p>
+            <ul>
+                <li><strong>Swift 5.0:</strong> For robust, type-safe development</li>
+                <li><strong>UIKit:</strong> For the user interface and animations</li>
+                <li><strong>Core Animation:</strong> For smooth transitions and effects</li>
+                <li><strong>Firebase:</strong> For real-time leaderboards and analytics</li>
+                <li><strong>UserDefaults:</strong> For local score persistence</li>
+            </ul>
+            
+            <h3>Game Mechanics</h3>
+            <p>The core gameplay loop involves:</p>
+            <ul>
+                <li>Generating random math equations (addition, subtraction, multiplication, division)</li>
+                <li>Presenting two answer choices - one correct, one incorrect</li>
+                <li>Detecting swipe gestures (up/down) toward the correct answer</li>
+                <li>Decreasing the timer with each level to increase difficulty</li>
+                <li>Tracking high scores and displaying them on global leaderboards</li>
+            </ul>
+            
+            <h2>🚧 Major Challenges</h2>
+            
+            <h3>1. Swipe Detection & Responsiveness</h3>
+            <p>One of the biggest challenges was creating responsive swipe detection that felt natural. Players needed to be able to swipe quickly without accidental inputs. I solved this by:</p>
+            <ul>
+                <li>Implementing custom UIPanGestureRecognizer logic</li>
+                <li>Fine-tuning velocity and distance thresholds</li>
+                <li>Adding visual feedback for successful swipes</li>
+            </ul>
+            
+            <h3>2. Timer Management</h3>
+            <p>Creating a timer system that felt fair but challenging required careful balancing:</p>
+            <ul>
+                <li>Starting with generous time limits for early levels</li>
+                <li>Implementing a smooth difficulty curve</li>
+                <li>Adding visual indicators for time remaining</li>
+                <li>Ensuring the timer never becomes impossibly fast</li>
+            </ul>
+            
+            <h3>3. Leaderboard Integration</h3>
+            <p>Implementing real-time leaderboards with Firebase presented several challenges:</p>
+            <ul>
+                <li>Handling network connectivity issues gracefully</li>
+                <li>Preventing cheating and score manipulation</li>
+                <li>Optimizing database queries for performance</li>
+                <li>Managing user authentication for verified scores</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <p><strong>Pro Tip:</strong> Always implement offline functionality first, then layer on online features. This ensures your app works reliably even with poor connectivity.</p>
+            </div>
+            
+            <h2>📱 App Store Journey</h2>
+            
+            <h3>Preparation Phase</h3>
+            <p>Getting ready for App Store submission involved:</p>
+            <ul>
+                <li>Creating app icons for all required sizes</li>
+                <li>Writing compelling app descriptions and keywords</li>
+                <li>Recording gameplay videos and taking screenshots</li>
+                <li>Testing on multiple device sizes and iOS versions</li>
+            </ul>
+            
+            <h3>Review Process</h3>
+            <p>The App Store review was surprisingly smooth. Apple approved Sum Slam on the first submission, which I attribute to:</p>
+            <ul>
+                <li>Following Apple's Human Interface Guidelines strictly</li>
+                <li>Thorough testing before submission</li>
+                <li>Clear app functionality without any gray areas</li>
+                <li>Proper handling of user data and privacy</li>
+            </ul>
+            
+            <h2>📊 Lessons Learned</h2>
+            
+            <h3>Technical Insights</h3>
+            <ul>
+                <li><strong>Start with MVP:</strong> I initially over-engineered features that users didn't need</li>
+                <li><strong>Test Early, Test Often:</strong> Regular testing on real devices revealed issues simulators missed</li>
+                <li><strong>Performance Matters:</strong> Even simple games need careful memory management</li>
+            </ul>
+            
+            <h3>Design Principles</h3>
+            <ul>
+                <li><strong>Simplicity Wins:</strong> The most successful features were the simplest ones</li>
+                <li><strong>Feedback is Crucial:</strong> Users need immediate visual/haptic feedback for actions</li>
+                <li><strong>Accessibility First:</strong> Supporting VoiceOver and other accessibility features was essential</li>
+            </ul>
+            
+            <h2>🚀 Future Plans</h2>
+            <p>Sum Slam continues to evolve based on user feedback:</p>
+            <ul>
+                <li>Adding more game modes (fractions, decimals, advanced operations)</li>
+                <li>Implementing social features like friend challenges</li>
+                <li>Creating educational content for different grade levels</li>
+                <li>Exploring Apple Watch integration for quick practice sessions</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <p><strong>Current Status:</strong> Sum Slam is live on the App Store with over 1,000 downloads and maintaining a 4.8-star rating!</p>
+            </div>
+            
+            <p>Building Sum Slam was one of the most rewarding projects I've ever worked on. It combined my love for problem-solving, clean code, and creating delightful user experiences. The project taught me that sometimes the simplest ideas, when executed well, can create the most engaging experiences.</p>
+            
+            <a href="https://apps.apple.com/us/app/sumslam/id6742594902" class="app-link" target="_blank">
+                Download Sum Slam on the App Store →
+            </a>
+        </div>
+    </article>
+</body>
+</html> 
