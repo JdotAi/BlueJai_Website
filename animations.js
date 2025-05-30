@@ -1,7 +1,7 @@
 // Function to handle element visibility and animations on scroll
 function handleScrollAnimations() {
     // Get all elements that should be animated on scroll
-    const animatedElements = document.querySelectorAll('.section-title, .about-grid, .app-intro, .app-showcase, .leaderboard-intro, .leaderboard-tables, .contact-container');
+    const animatedElements = document.querySelectorAll('.section-title, .about-grid, .app-intro, .app-showcase, .leaderboard-intro, .leaderboard-tables, .blog-intro');
     
     // Create an intersection observer
     const observer = new IntersectionObserver((entries) => {
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#app">App</a>
-                <a href="#contact">Contact Us</a>
+                <a href="#blog">Blog</a>
             </div>
         `;
         

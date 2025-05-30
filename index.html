@@ -1145,6 +1145,19 @@
                 display: block;
                 overflow-x: auto;
             }
+            
+            .blog {
+                padding: 4rem 5% 4rem;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .blog-cta {
+                padding: 2rem 1rem;
+            }
         }
         
         .time-info {
@@ -1419,6 +1432,235 @@
             background-color: #F2E72B;
             border-radius: 2px;
             transition: width 0.1s linear; /* Smoother transition */
+        }
+        
+        /* Blog Section */
+        .blog {
+            min-height: 100vh;
+            padding: 0.5rem 10% 5rem;
+            background-color: #0A0A0A;
+            position: relative;
+            margin-top: 60px;
+        }
+        
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .blog-intro {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+        
+        .blog-intro.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .blog-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #e6f9f9;
+        }
+        
+        .blog-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+            contain: layout style paint;
+        }
+        
+        .blog-post {
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            will-change: transform, box-shadow, background;
+            min-height: 380px;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+        
+        .blog-post:hover,
+        .blog-post:focus {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(145deg, #252525, #1a1a1a);
+            border-color: rgba(77, 108, 250, 0.3);
+        }
+        
+        .blog-post:active {
+            transform: translateY(-4px);
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .blog-post.featured {
+            border: 2px solid #4D6CFA;
+        }
+        
+        .post-image {
+            position: relative;
+            height: 150px;
+            overflow: hidden;
+        }
+        
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .blog-post:hover .post-image img {
+            transform: scale(1.05);
+        }
+        
+        .placeholder-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #4D6CFA, #6B73FF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .post-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #4D6CFA;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .blog-post:hover .post-badge {
+            background: #6B73FF;
+            transform: scale(1.05);
+        }
+        
+        .post-content {
+            padding: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .post-date {
+            color: #4D6CFA;
+            font-weight: 500;
+        }
+        
+        .post-category {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .post-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #e6f9f9;
+            transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .blog-post:hover .post-title {
+            color: #ffffff;
+        }
+        
+        .post-excerpt {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .blog-post:hover .post-excerpt {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tag {
+            background: rgba(77, 108, 250, 0.2);
+            color: #4D6CFA;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(77, 108, 250, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .blog-post:hover .tag {
+            background: rgba(77, 108, 250, 0.3);
+            border-color: rgba(77, 108, 250, 0.5);
+            color: #6B73FF;
+        }
+        
+        .blog-cta {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .blog-cta p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-post::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(77, 108, 250, 0.05), rgba(107, 115, 255, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .blog-post:hover::before {
+            opacity: 1;
         }
     </style>
     <!-- Added JavaScript files for animations and swipe-to-refresh -->
@@ -1863,7 +2105,7 @@
             });
             
             // Reveal elements on scroll
-            const revealElements = document.querySelectorAll('.section-title, .app-intro, .app-showcase, .contact-container');
+            const revealElements = document.querySelectorAll('.section-title, .app-intro, .app-showcase, .blog-intro');
             const quoteReveal = document.querySelector('.quote-reveal');
             const landingSection = document.querySelector('.landing');
             const landingElements = document.querySelectorAll('.welcome-text, .logo, .journey-text, .scroll-indicator');
@@ -1974,7 +2216,7 @@
         <div class="nav-links">
             <a href="#app" class="nav-link">App</a>
             <a href="#leaderboard" class="nav-link">Leaderboard</a>
-            <a href="#contact" class="nav-link">Contact Us</a>
+            <a href="#blog" class="nav-link">Blog</a>
         </div>
     </header>
     
@@ -2140,16 +2382,86 @@
                 <path d="M0,120V73.71c47.79,-22.2,103.59,-32.17,158,-28c70.36,5.37,136.33,33.31,206.8,37.5C438.64,87.57,512.34,66.33,583,47.95c69.27,-18,138.3,-24.88,209.4,-13.08c36.15,6,69.85,17.84,104.45,29.34C989.49,95,1113,134.29,1200,67.53V120Z" opacity=".6" class="shape-fill"></path>
                 <path d="M0,120V104.19C13,83.08,27.64,63.14,47.69,47.95,99.41,8.73,165,9,224.58,28.42c31.15,10.15,60.09,26.07,89.67,39.8,40.92,19,84.73,46,130.83,49.67,36.26,2.85,70.9,-9.42,98.6,-31.56,31.77,-25.39,62.32,-62,103.63,-73,40.44,-10.79,81.35,6.69,119.13,24.28s75.16,39,116.92,43.05c59.73,5.85,113.28,-22.88,168.9,-38.84,30.2,-8.66,59,-6.17,87.09,7.5,22.43,10.89,48,26.93,60.65,49.24V120Z" class="shape-fill-2"></path>
                 <path d="M0,120V114.37C149.93,61,314.09,48.68,475.83,77.43c43,7.64,84.23,20.12,127.61,26.46,59,8.63,112.48,-12.24,165.56,-35.4C827.93,42.78,886,24.76,951.2,30c86.53,7,172.46,45.71,248.8,84.81V120Z" class="shape-fill-3"></path>
-            </svg>
+            <a href="mailto:jaidotreal@gmail.com" class="btn">Get in Touch</a>
         </div>
     </section>
     
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="contact-container">
-            <h2 class="contact-title">Contact Us</h2>
-            <p class="contact-text">We'd love to hear from you! Whether you have a question, a suggestion, or just want to say hello, we're here to help.</p>
-            <a href="mailto:jaidotreal@gmail.com" class="btn">Get in Touch</a>
+    <!-- Blog Section -->
+    <section class="blog" id="blog">
+        <div class="blog-container">
+            <div class="blog-intro">
+                <h2 class="blog-title">Latest Projects & Updates</h2>
+                <p class="blog-subtitle">Discover what I've been working on recently and explore my latest developments</p>
+            </div>
+            
+            <div class="blog-grid">
+                <a href="sumslam-blog.html" class="blog-post featured">
+                    <div class="post-image">
+                        <img src="Images/MadMathFull copy.jpg" alt="Sum Slam Development">
+                        <div class="post-badge">Featured</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">January 2025</span>
+                            <span class="post-category">Mobile Development</span>
+                        </div>
+                        <h3 class="post-title">Sum Slam: From Concept to App Store</h3>
+                        <p class="post-excerpt">The journey of building a fast-paced math game from initial concept to a published iOS app. Learn about the challenges, design decisions, and technical implementation of Sum Slam.</p>
+                        <div class="post-tags">
+                            <span class="tag">Swift</span>
+                            <span class="tag">iOS</span>
+                            <span class="tag">Game Development</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="bluejai-website-blog.html" class="blog-post">
+                    <div class="post-image">
+                        <img src="Images/Logo_2_3_no_back.png" alt="BlueJai Website">
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">December 2024</span>
+                            <span class="post-category">Web Development</span>
+                        </div>
+                        <h3 class="post-title">Building the BlueJai Website</h3>
+                        <p class="post-excerpt">Creating a modern, responsive website with dynamic animations and interactive elements. Exploring the design principles and technologies behind this portfolio.</p>
+                        <div class="post-tags">
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="ai-project-blog.html" class="blog-post">
+                    <div class="post-image">
+                        <div class="placeholder-image">
+                            <svg width="45" height="45" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L13.09 8.26L19 9L13.09 9.74L12 16L10.91 9.74L5 9L10.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">Coming Soon</span>
+                            <span class="post-category">Machine Learning</span>
+                        </div>
+                        <h3 class="post-title">AI-Powered Project Assistant</h3>
+                        <p class="post-excerpt">Developing an intelligent assistant that helps manage and optimize development workflows using machine learning and natural language processing.</p>
+                        <div class="post-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">AI/ML</span>
+                            <span class="tag">NLP</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="blog-cta">
+                <p>Want to stay updated on my latest projects?</p>
+                <a href="mailto:jaidotreal@gmail.com" class="btn">Get in Touch</a>
+            </div>
         </div>
     </section>
     
@@ -2164,7 +2476,7 @@
                 <a href="#landing" class="footer-link">Home</a>
                 <a href="#app" class="footer-link">App</a>
                 <a href="#leaderboard" class="footer-link">Leaderboard</a>
-                <a href="mailto:jaidotreal@gmail.com" class="footer-link">Contact</a>
+                <a href="#blog" class="footer-link">Blog</a>
             </div>
             <div class="social-links">
                 <a href="https://github.com/JdotAi" target="_blank" class="social-link">
@@ -2174,8 +2486,7 @@
                 </a>
                 <a href="https://www.instagram.com/sumslam_real/" target="_blank" class="social-link">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                    </svg>
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                 </a>
                 <a href="https://www.linkedin.com/in/jaypaatel/" target="_blank" class="social-link">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
