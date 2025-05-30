@@ -178,7 +178,7 @@
         .about::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 0;
             width: 100%;
             height: 40px;
@@ -786,7 +786,7 @@
         /* Add a wave divider between leaderboard and contact sections */
         .wave-divider {
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 0;
             width: 100%;
             overflow: hidden;
@@ -1152,7 +1152,7 @@
             
             .blog-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 1rem;
             }
             
             .blog-cta {
@@ -1477,7 +1477,7 @@
         
         .blog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
             gap: 2rem;
             margin-bottom: 4rem;
             contain: layout style paint;
@@ -1651,7 +1651,7 @@
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
+            bottom: -5px;
             background: linear-gradient(135deg, rgba(77, 108, 250, 0.05), rgba(107, 115, 255, 0.05));
             opacity: 0;
             transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1662,6 +1662,34 @@
         .blog-post:hover::before {
             opacity: 1;
         }
+
+/* Mobile responsive blog cards */
+@media (max-width: 768px) {
+    .blog-post { min-height: 320px; }
+    .post-image { height: 120px; }
+
+/* Mobile responsive blog cards */
+@media (max-width: 768px) {
+    .blog-post { min-height: 320px; }
+    .post-image { height: 120px; }
+    .post-title { font-size: 1.1rem; }
+@media (max-width: 400px) {
+    .blog-post { min-height: 280px; }
+    .post-image { height: 80px; }
+    .post-title { font-size: 0.95rem; }
+    .post-excerpt { font-size: 0.85rem; }
+    .tag { font-size: 0.7rem; padding: 0.2rem 0.5rem; }
+}
+}
+@media (max-width: 600px) {
+    .blog-post { min-height: 300px; }
+    .post-image { height: 100px; }
+    .post-content { padding: 1rem; }
+    .post-title { font-size: 1rem; }
+    .post-excerpt { font-size: 0.9rem; }
+}
+    .post-title { font-size: 1.1rem; }
+}
     </style>
     <!-- Added JavaScript files for animations and swipe-to-refresh -->
     <script src="animations.js" defer></script>
