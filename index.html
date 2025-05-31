@@ -1493,7 +1493,8 @@
             cursor: pointer;
             text-decoration: none;
             color: inherit;
-            display: block;
+            display: flex;
+            flex-direction: column;
             position: relative;
             will-change: transform, box-shadow, background;
             min-height: 380px;
@@ -1577,6 +1578,10 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             z-index: 2;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            height: calc(100% - 150px);
         }
         
         .post-meta {
@@ -1612,6 +1617,7 @@
             line-height: 1.6;
             margin-bottom: 1.5rem;
             transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-grow: 1;
         }
         
         .blog-post:hover .post-excerpt {
@@ -1622,6 +1628,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
+            margin-bottom: 1rem;
         }
         
         .tag {
@@ -1706,6 +1713,36 @@
         
         .blog-post.sumslam-post:hover .post-image img {
             transform: scale(0.84);
+        }
+        
+        .blog-post.featured.sumslam-post {
+            border: none;
+        }
+        .blog-post > * {
+            pointer-events: none;
+        }
+        .blog-post {
+            pointer-events: auto;
+        }
+        
+        .read-more-btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: #ff964f;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            align-self: flex-start;
+        }
+        
+        .blog-post:hover .read-more-btn {
+            background: #ff7f2a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 150, 79, 0.3);
         }
     </style>
     <!-- Added JavaScript files for animations and swipe-to-refresh -->
@@ -2457,6 +2494,7 @@
                             <span class="tag">iOS</span>
                             <span class="tag">Game Development</span>
                         </div>
+                        <div class="read-more-btn">Read More</div>
                     </div>
                 </a>
                 
@@ -2476,6 +2514,7 @@
                             <span class="tag">CSS</span>
                             <span class="tag">JavaScript</span>
                         </div>
+                        <div class="read-more-btn">Read More →</div>
                     </div>
                 </a>
                 
@@ -2499,6 +2538,7 @@
                             <span class="tag">AI/ML</span>
                             <span class="tag">NLP</span>
                         </div>
+                        <div class="read-more-btn">Read More →</div>
                     </div>
                 </a>
             </div>
