@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support BlueJai - Multiple Payment Options</title>
+    <link rel="icon" type="image/png" href="Images/Logo_2_3_no_back.png">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD&components=buttons"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Sacramento&family=Pacifico&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1a1a1a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .payment-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .payment-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .payment-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e6f9f9;
+            margin-bottom: 0.5rem;
+            font-family: 'Sacramento', cursive;
+        }
+        
+        .payment-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+        }
+        
+        .amount-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .amount-label {
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #e6f9f9;
+        }
+        
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .amount-btn {
+            padding: 0.8rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .amount-btn:hover,
+        .amount-btn.selected {
+            border-color: #4D6CFA;
+            background: rgba(77, 108, 250, 0.2);
+            color: #e6f9f9;
+        }
+        
+        .custom-amount {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .custom-amount:focus {
+            outline: none;
+            border-color: #4D6CFA;
+        }
+        
+        .payment-methods {
+            margin-bottom: 2rem;
+        }
+        
+        .method-label {
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #e6f9f9;
+        }
+        
+        .payment-tabs {
+            display: flex;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: #4D6CFA;
+            color: white;
+        }
+        
+        .payment-form {
+            display: none;
+        }
+        
+        .payment-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #4D6CFA;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 0.5rem;
+        }
+        
+        .stripe-element {
+            padding: 0.8rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .payment-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+        
+        .stripe-btn {
+            background: linear-gradient(135deg, #4D6CFA, #6B73FF);
+            color: white;
+        }
+        
+        .stripe-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(77, 108, 250, 0.3);
+        }
+        
+        .paypal-container {
+            margin-top: 1rem;
+        }
+        
+        .express-payment {
+            margin-bottom: 1rem;
+        }
+        
+        .express-btn {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .express-btn:hover {
+            border-color: #4D6CFA;
+            background: rgba(77, 108, 250, 0.2);
+        }
+        
+        .apple-pay-btn {
+            background: #000000;
+            border-color: #333333;
+        }
+        
+        .google-pay-btn {
+            background: #4285F4;
+            border-color: #4285F4;
+        }
+        
+        .error-message {
+            color: #FF6B6B;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .success-message {
+            color: #4CAF50;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .back-link {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #e6f9f9;
+        }
+        
+        @media (max-width: 768px) {
+            .payment-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .amount-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Website</a>
+    
+    <div class="payment-container">
+        <div class="payment-header">
+            <h1 class="payment-title">Support BlueJai</h1>
+            <p class="payment-subtitle">Choose your preferred payment method</p>
+        </div>
+        
+        <div class="amount-selector">
+            <label class="amount-label">Select Amount</label>
+            <div class="amount-options">
+                <button class="amount-btn" data-amount="5">$5</button>
+                <button class="amount-btn" data-amount="10">$10</button>
+                <button class="amount-btn selected" data-amount="20">$20</button>
+                <button class="amount-btn" data-amount="50">$50</button>
+                <button class="amount-btn" data-amount="100">$100</button>
+                <button class="amount-btn" data-amount="custom">Custom</button>
+            </div>
+            <input type="number" class="custom-amount" id="customAmount" placeholder="Enter custom amount" min="1" style="display: none;">
+        </div>
+        
+        <div class="payment-methods">
+            <label class="method-label">Payment Method</label>
+            
+            <!-- Express Payment Options -->
+            <div class="express-payment">
+                <button class="express-btn apple-pay-btn" id="applePayBtn" style="display: none;">
+                    🍎 Apple Pay
+                </button>
+                <button class="express-btn google-pay-btn" id="googlePayBtn" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.21 8.52c0-.69-.56-1.25-1.26-1.25s-1.26.56-1.26 1.25.56 1.25 1.26 1.25 1.26-.56 1.26-1.25zm7.31 1.24c.4-.01.74-.34.74-.75s-.34-.74-.75-.74h-1.35c-.4 0-.72.32-.72.72v4.04c0 .4.32.72.72.72s.72-.32.72-.72V9.73l.64.01zm-4.39 3.75c-.4 0-.72-.32-.72-.72V8.52c0-.4.32-.72.72-.72s.72.32.72.72v4.27c0 .4-.32.72-.72.72z"/>
+                    </svg>
+                    Google Pay
+                </button>
+            </div>
+            
+            <div class="payment-tabs">
+                <button class="tab-btn active" data-tab="card">Credit Card</button>
+                <button class="tab-btn" data-tab="paypal">PayPal</button>
+            </div>
+            
+            <!-- Credit Card Form -->
+            <div class="payment-form active" id="cardForm">
+                <form id="payment-form">
+                    <div class="form-group">
+                        <label class="form-label">Card Information</label>
+                        <div id="card-element" class="stripe-element">
+                            <!-- Stripe Elements will create form elements here -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Name on Card</label>
+                            <input type="text" class="form-input" id="cardName" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">ZIP Code</label>
+                            <input type="text" class="form-input" id="zipCode" placeholder="12345" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="payment-btn stripe-btn" id="submitBtn">
+                        Complete Payment
+                    </button>
+                    
+                    <div class="error-message" id="cardError"></div>
+                    <div class="success-message" id="cardSuccess"></div>
+                </form>
+            </div>
+            
+            <!-- PayPal Form -->
+            <div class="payment-form" id="paypalForm">
+                <div class="paypal-container" id="paypal-button-container">
+                    <!-- PayPal button will be rendered here -->
+                </div>
+                <div class="error-message" id="paypalError"></div>
+                <div class="success-message" id="paypalSuccess"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Payment configuration
+        const STRIPE_PUBLISHABLE_KEY = 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY'; // Replace with your Stripe publishable key
+        const PAYPAL_CLIENT_ID = 'YOUR_PAYPAL_CLIENT_ID'; // Replace with your PayPal client ID
+        
+        // Initialize variables
+        let stripe, elements, cardElement;
+        let selectedAmount = 20;
+        let currentPaymentMethod = 'card';
+        
+        // Initialize Stripe
+        function initializeStripe() {
+            try {
+                stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+                elements = stripe.elements({
+                    appearance: {
+                        theme: 'night',
+                        variables: {
+                            colorPrimary: '#4D6CFA',
+                            colorBackground: 'rgba(255, 255, 255, 0.05)',
+                            colorText: '#ffffff',
+                            colorDanger: '#FF6B6B',
+                            fontFamily: 'Montserrat, sans-serif',
+                            borderRadius: '8px'
+                        }
+                    }
+                });
+                
+                cardElement = elements.create('card');
+                cardElement.mount('#card-element');
+                
+                cardElement.on('change', ({error}) => {
+                    const displayError = document.getElementById('cardError');
+                    if (error) {
+                        displayError.textContent = error.message;
+                        displayError.style.display = 'block';
+                    } else {
+                        displayError.style.display = 'none';
+                    }
+                });
+            } catch (error) {
+                console.error('Stripe initialization failed:', error);
+                showError('cardError', 'Payment system initialization failed. Please try again later.');
+            }
+        }
+        
+        // Initialize PayPal
+        function initializePayPal() {
+            if (typeof paypal !== 'undefined') {
+                paypal.Buttons({
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: selectedAmount.toString()
+                                },
+                                description: 'Support BlueJai Development'
+                            }]
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            showSuccess('paypalSuccess', `Thank you ${details.payer.name.given_name}! Your payment was successful.`);
+                            setTimeout(() => {
+                                window.location.href = 'index.html';
+                            }, 3000);
+                        });
+                    },
+                    onError: function(err) {
+                        console.error('PayPal error:', err);
+                        showError('paypalError', 'PayPal payment failed. Please try again.');
+                    }
+                }).render('#paypal-button-container');
+            }
+        }
+        
+        // Initialize Apple Pay
+        function initializeApplePay() {
+            if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
+                document.getElementById('applePayBtn').style.display = 'block';
+                document.getElementById('applePayBtn').addEventListener('click', handleApplePay);
+            }
+        }
+        
+        // Initialize Google Pay
+        function initializeGooglePay() {
+            if (window.google && google.payments) {
+                const paymentsClient = new google.payments.api.PaymentsClient({environment: 'TEST'}); // Change to 'PRODUCTION' for live
+                
+                paymentsClient.isReadyToPay({
+                    apiVersion: 2,
+                    apiVersionMinor: 0,
+                    allowedPaymentMethods: [{
+                        type: 'CARD',
+                        parameters: {
+                            allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                            allowedCardNetworks: ['MASTERCARD', 'VISA']
+                        }
+                    }]
+                }).then(function(response) {
+                    if (response.result) {
+                        document.getElementById('googlePayBtn').style.display = 'block';
+                        document.getElementById('googlePayBtn').addEventListener('click', () => handleGooglePay(paymentsClient));
+                    }
+                }).catch(function(err) {
+                    console.log('Google Pay not available:', err);
+                });
+            }
+        }
+        
+        // Handle Apple Pay
+        function handleApplePay() {
+            const request = {
+                countryCode: 'US',
+                currencyCode: 'USD',
+                supportedNetworks: ['visa', 'masterCard', 'amex'],
+                merchantCapabilities: ['supports3DS'],
+                total: {
+                    label: 'Support BlueJai',
+                    amount: selectedAmount.toString()
+                }
+            };
+            
+            const session = new ApplePaySession(3, request);
+            
+            session.onvalidatemerchant = function(event) {
+                // You'll need to implement merchant validation on your server
+                console.log('Apple Pay merchant validation needed');
+            };
+            
+            session.onpaymentauthorized = function(event) {
+                // Process the payment
+                console.log('Apple Pay authorized:', event.payment);
+                session.completePayment(ApplePaySession.STATUS_SUCCESS);
+                showSuccess('cardSuccess', 'Apple Pay payment successful!');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 3000);
+            };
+            
+            session.begin();
+        }
+        
+        // Handle Google Pay
+        function handleGooglePay(paymentsClient) {
+            const paymentDataRequest = {
+                apiVersion: 2,
+                apiVersionMinor: 0,
+                allowedPaymentMethods: [{
+                    type: 'CARD',
+                    parameters: {
+                        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                        allowedCardNetworks: ['MASTERCARD', 'VISA']
+                    },
+                    tokenizationSpecification: {
+                        type: 'PAYMENT_GATEWAY',
+                        parameters: {
+                            gateway: 'stripe',
+                            'stripe:version': '2020-08-27',
+                            'stripe:publishableKey': STRIPE_PUBLISHABLE_KEY
+                        }
+                    }
+                }],
+                transactionInfo: {
+                    totalPriceStatus: 'FINAL',
+                    totalPrice: selectedAmount.toString(),
+                    currencyCode: 'USD'
+                },
+                merchantInfo: {
+                    merchantName: 'BlueJai LLC'
+                }
+            };
+            
+            paymentsClient.loadPaymentData(paymentDataRequest).then(function(paymentData) {
+                console.log('Google Pay successful:', paymentData);
+                showSuccess('cardSuccess', 'Google Pay payment successful!');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 3000);
+            }).catch(function(err) {
+                console.error('Google Pay error:', err);
+                showError('cardError', 'Google Pay payment failed. Please try again.');
+            });
+        }
+        
+        // Handle amount selection
+        document.querySelectorAll('.amount-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                if (this.dataset.amount === 'custom') {
+                    document.getElementById('customAmount').style.display = 'block';
+                    document.getElementById('customAmount').focus();
+                } else {
+                    document.getElementById('customAmount').style.display = 'none';
+                    selectedAmount = parseFloat(this.dataset.amount);
+                    updatePayPalButton();
+                }
+            });
+        });
+        
+        document.getElementById('customAmount').addEventListener('input', function() {
+            selectedAmount = parseFloat(this.value) || 1;
+            updatePayPalButton();
+        });
+        
+        // Handle tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tab = this.dataset.tab;
+                
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.payment-form').forEach(f => f.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(tab + 'Form').classList.add('active');
+                
+                currentPaymentMethod = tab;
+            });
+        });
+        
+        // Handle Stripe form submission
+        document.getElementById('payment-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.classList.add('loading');
+            submitBtn.textContent = 'Processing...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Create payment intent on your server
+                const response = await fetch('/create-payment-intent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        amount: selectedAmount * 100, // Convert to cents
+                        currency: 'usd'
+                    })
+                });
+                
+                const {client_secret} = await response.json();
+                
+                const {error} = await stripe.confirmCardPayment(client_secret, {
+                    payment_method: {
+                        card: cardElement,
+                        billing_details: {
+                            name: document.getElementById('cardName').value,
+                            address: {
+                                postal_code: document.getElementById('zipCode').value
+                            }
+                        }
+                    }
+                });
+                
+                if (error) {
+                    showError('cardError', error.message);
+                } else {
+                    showSuccess('cardSuccess', 'Payment successful! Thank you for your support.');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 3000);
+                }
+            } catch (error) {
+                console.error('Payment error:', error);
+                showError('cardError', 'Payment failed. Please try again.');
+            }
+            
+            submitBtn.classList.remove('loading');
+            submitBtn.textContent = 'Complete Payment';
+            submitBtn.disabled = false;
+        });
+        
+        // Utility functions
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+        
+        function showSuccess(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+        
+        function updatePayPalButton() {
+            // Reinitialize PayPal button with new amount
+            document.getElementById('paypal-button-container').innerHTML = '';
+            initializePayPal();
+        }
+        
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeStripe();
+            initializePayPal();
+            initializeApplePay();
+            initializeGooglePay();
+        });
+    </script>
+    
+    <!-- Google Pay API -->
+    <script async src="https://pay.google.com/gp/p/js/pay.js"></script>
+</body>
+</html> 
