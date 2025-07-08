@@ -11,13 +11,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Sacramento&family=Special+Elite&family=Dancing+Script:wght@400;700&family=Great+Vibes&display=swap');
         
-        @font-face {
-            font-family: 'Pacifico';
-            src: url('Font/Pacifico-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-        
         * {
             margin: 0;
             padding: 0;
@@ -1010,29 +1003,6 @@
             font-size: 0.9rem;
         }
         
-        .buy-me-coffee-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-        
-        .fallback-coffee-btn {
-            background: #FFDD00;
-            color: #000000;
-            padding: 12px 28px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-family: 'Pacifico', cursive;
-            font-size: 1rem;
-            border: 2px solid #000000;
-            transition: all 0.3s ease;
-        }
-        
-        .fallback-coffee-btn:hover {
-            background: #FFE74C;
-            transform: translateY(-2px);
-        }
-        
         /* Media Queries */
         @media (max-width: 1024px) {
             .app-showcase {
@@ -1414,9 +1384,6 @@
             transform: translateY(-2px);
         }
         
-        /* Removed countdown timer CSS - keeping only live updates indicator */
-        
-        /*
         .refresh-countdown {
             display: flex;
             flex-direction: column;
@@ -1424,32 +1391,32 @@
             padding: 0.4rem 0.8rem;
             border-radius: 20px;
             font-size: 0.9rem;
-            min-width: 170px;
-            width: 170px;
+            min-width: 170px; /* Increased width to accommodate the timer better */
+            width: 170px; /* Fixed width to prevent box size changes */
         }
         
         .refresh-text {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: center; /* Added to vertically align items */
             margin-bottom: 4px;
             position: relative;
-            white-space: nowrap;
+            white-space: nowrap; /* Prevent text wrapping */
         }
         
         .seconds-container {
             display: inline-block;
-            width: 55px;
+            width: 55px; /* Increased width for minutes:seconds format */
             text-align: left;
-            margin-left: 4px;
+            margin-left: 4px; /* Add a bit of spacing after "Next update in" */
         }
         
         .seconds-left {
             font-weight: bold;
             color: #F2E72B;
             display: inline-block;
-            width: 45px;
-            text-align: right;
+            width: 45px; /* Increased width for minutes:seconds format */
+            text-align: right; /* Right-align the text for consistent positioning */
         }
         
         .refresh-progress {
@@ -1464,9 +1431,8 @@
             width: 100%;
             background-color: #F2E72B;
             border-radius: 2px;
-            transition: width 0.1s linear;
+            transition: width 0.1s linear; /* Smoother transition */
         }
-        */
         
         /* Blog Section */
         .blog {
@@ -1777,26 +1743,6 @@
             background: #ff7f2a;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(255, 150, 79, 0.3);
-        }
-        
-        .coffee-btn {
-            display: inline-block;
-            background: #FFDD00;
-            color: #000000;
-            padding: 15px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-family: 'Pacifico', cursive;
-            font-size: 1.1rem;
-            border: 2px solid #000000;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 221, 0, 0.3);
-        }
-        
-        .coffee-btn:hover {
-            background: #FFE74C;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 221, 0, 0.4);
         }
     </style>
     <!-- Added JavaScript files for animations and swipe-to-refresh -->
@@ -2116,17 +2062,59 @@
         
         // Create countdown for next refresh
         function startRefreshCountdown() {
-            // Countdown functionality removed - keeping only live updates indicator
+            // Create indicator elements if they don't exist
+            if (!document.querySelector('.refresh-countdown')) {
+                const refreshCountdown = document.createElement('div');
+                refreshCountdown.className = 'refresh-countdown';
+                refreshCountdown.innerHTML = `
+                    <div class="refresh-text">
+                        Next update in<div class="seconds-container"><span class="seconds-left">30:00</span></div>
+                    </div>
+                    <div class="refresh-progress">
+                        <div class="refresh-bar"></div>
+                    </div>
+                `;
+                document.querySelector('.stats-container').appendChild(refreshCountdown);
+            }
+            
+            resetRefreshCountdown();
         }
         
         // Reset the countdown timer
         function resetRefreshCountdown() {
-            // Countdown functionality removed
+            secondsToNextRefresh = 1800; // 30 minutes in seconds
+            nextRefreshTime = Date.now() + REFRESH_INTERVAL_MS;
+            
+            // Update the countdown display
+            updateRefreshCountdown();
+            
+            // Set up the countdown timer
+            const countdownInterval = setInterval(() => {
+                secondsToNextRefresh = Math.max(0, Math.floor((nextRefreshTime - Date.now()) / 1000));
+                updateRefreshCountdown();
+                
+                if (secondsToNextRefresh <= 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
         }
         
         // Update the countdown display
         function updateRefreshCountdown() {
-            // Countdown functionality removed
+            const secondsLeftElement = document.querySelector('.seconds-left');
+            const refreshBar = document.querySelector('.refresh-bar');
+            
+            if (secondsLeftElement && refreshBar) {
+                // Format the time display - show minutes and seconds
+                const minutes = Math.floor(secondsToNextRefresh / 60);
+                const seconds = secondsToNextRefresh % 60;
+                const formattedTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                secondsLeftElement.textContent = formattedTime;
+                
+                // Update progress bar (from 100% to 0%)
+                const progressPercent = (secondsToNextRefresh / 1800) * 100;
+                refreshBar.style.width = `${progressPercent}%`;
+            }
         }
         
         // Fallback method to count active users
@@ -2510,7 +2498,6 @@
                     </div>
                 </a>
                 
-                <!-- Temporarily commented out - to be fixed later
                 <a href="bluejai-website-blog.html" class="blog-post bluejai-post">
                     <div class="post-image">
                         <img src="Images/Logo_2_3_no_back.png" alt="BlueJai Website">
@@ -2554,16 +2541,11 @@
                         <div class="read-more-btn">Read More</div>
                     </div>
                 </a>
-                -->
             </div>
             
             <div class="blog-cta">
-                <div style="margin-top: 2rem;">
-                    <p style="margin-bottom: 1rem;">Enjoying my work? Support me!</p>
-                    <a href="https://www.buymeacoffee.com/bluejaii" target="_blank" class="coffee-btn">
-                        🍕 Buy me a slice
-                    </a>
-                </div>
+                <p>Want to stay updated on my latest projects?</p>
+                <a href="mailto:jaidotreal@gmail.com" class="btn">Get in Touch</a>
             </div>
         </div>
     </section>
@@ -2596,28 +2578,9 @@
                         <path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
                     </svg>
                 </a>
-                <a href="mailto:jaidotreal@gmail.com" class="social-link">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                    </svg>
-                </a>
-            </div>
-            <div class="buy-me-coffee-container">
-                <!-- Buy Me a Coffee Button -->
-                <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bluejaii" data-color="#FFDD00" data-emoji="🍕" data-font="Pacifico" data-text="Buy me a slice" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
-                
-                <!-- Fallback button in case the script doesn't load -->
-                <noscript>
-                    <a href="https://www.buymeacoffee.com/bluejaii" target="_blank" class="fallback-coffee-btn">
-                        🍕 Buy me a slice
-                    </a>
-                </noscript>
             </div>
             <div class="copyright">© 2025 BlueJai LLC. All rights reserved.</div>
         </div>
     </footer>
-    
-    <!-- Floating Buy Me a Coffee Widget -->
-    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="bluejaii" data-description="Support me on Buy me a coffee!" data-message="Thank you for visiting BlueJai! 🍕" data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </body>
 </html>
